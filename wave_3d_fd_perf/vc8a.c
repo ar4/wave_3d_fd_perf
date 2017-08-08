@@ -7,7 +7,6 @@ static void inner_block(const float *restrict const f,
 			const int nz,
 			const int nxi,
 			const float *restrict const model_padded2_dt2,
-			const float dt,
 			const float *restrict const fd_coeff,
 			const int bx,
 			const int by,
@@ -130,7 +129,7 @@ static void inner(const float *restrict const f,
 		for (by = 0; by < nby; by++) {
 			for (bx = 0; bx < nbx; bx++) {
 				inner_block(f, fp, nx, ny, nz, nxi,
-					    model_padded2_dt2, dt, fd_coeff, bx,
+					    model_padded2_dt2, fd_coeff, bx,
 					    by, bz, blocksize_x, blocksize_y,
 					    blocksize_z);
 			}
