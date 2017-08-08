@@ -7,7 +7,8 @@ from wave_3d_fd_perf.propagators import (VC1_O2_gcc, VC1_O3_gcc, VC1_Ofast_gcc,
                                          VC3_Ofast_gcc, VC4_Ofast_gcc,
                                          VC5_Ofast_gcc, VC6_Ofast_gcc,
                                          VC7_Ofast_gcc, VC7_O2_gcc,
-                                         VC7_O2_unroll_gcc, 
+                                         VC7_O2_unroll_gcc,
+                                         VC8_Ofast_gcc,
                                          VF1_O2_gcc, VF1_O3_gcc, VF1_Ofast_gcc,
                                          VF2_Ofast_gcc, VF3_Ofast_gcc,
                                          VF4_Ofast_gcc)
@@ -47,7 +48,7 @@ def model_one(N=50, calc_expected=True):
 
     # direct wave
     if calc_expected:
-        expected = np.array([green(x*dx, y*dx, z*dx, sx*dx, sy*dx, sz*dx, 
+        expected = np.array([green(x*dx, y*dx, z*dx, sx*dx, sy*dx, sz*dx,
                                    dx, dt,
                                    (nsteps)*dt, 1500,
                                    source) \
@@ -97,7 +98,8 @@ def versions():
             VC3_Ofast_gcc, VC4_Ofast_gcc,
             VC5_Ofast_gcc, VC6_Ofast_gcc,
             VC7_Ofast_gcc, VC7_O2_gcc,
-            VC7_O2_unroll_gcc, 
+            VC7_O2_unroll_gcc,
+            VC8_Ofast_gcc,
             VF1_O2_gcc, VF1_O3_gcc, VF1_Ofast_gcc,
             VF2_Ofast_gcc, VF3_Ofast_gcc,
             VF4_Ofast_gcc]

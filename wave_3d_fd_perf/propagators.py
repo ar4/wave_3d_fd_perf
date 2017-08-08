@@ -141,10 +141,12 @@ class VC(Propagator):
 
 class VC_blocksize(VC):
     """C implementations with variable blocksize."""
-    def __init__(self, libname, model, blocksize_y, blocksize_x, dx, dt=None, align=None):
+    def __init__(self, libname, model, blocksize_x, blocksize_y, blocksize_z,
+                 dx, dt=None, align=None):
         super(VC_blocksize, self).__init__(libname, model, dx, dt, align)
-        self.blocksize_y = blocksize_y
         self.blocksize_x = blocksize_x
+        self.blocksize_y = blocksize_y
+        self.blocksize_z = blocksize_z
         self._libvc.step.argtypes = \
                 [np.ctypeslib.ndpointer(dtype=c_float, ndim=3,
                                         shape=(self.nz_padded,
@@ -304,6 +306,21 @@ class VC7_O2_unroll_gcc(VC):
     """VC7 with -O2 and -funroll-loops."""
     def __init__(self, model, dx, dt=None, align=None):
         super(VC7_O2_unroll_gcc, self).__init__('libvc7_O2_unroll_gcc', model, dx, dt, align)
+
+
+class VC8_Ofast_gcc(VC):
+    """VC6 with cache blocking."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC8_Ofast_gcc, self).__init__('libvc8_Ofast_gcc', model, dx, dt, align)
+
+
+class VC8a_Ofast_gcc(VC_blocksize):
+    """VC8 with variable block size."""
+    def __init__(self, model, blocksize_x, blocksize_y, blocksize_z,
+                 dx, dt=None, align=None):
+        super(VC8a_Ofast_gcc, self).__init__('libvc8a_Ofast_gcc', model,
+                                             blocksize_x, blocksize_y,
+                                             blocksize_z, dx, dt, align)
 
 
 class VF1_O2_gcc(VF):
