@@ -4,7 +4,9 @@ finite difference method so that runtimes can be compared.
 from ctypes import c_int, c_float
 import numpy as np
 import wave_3d_fd_perf
-from wave_3d_fd_perf import libvf1_O2_gcc, libvf1_O3_gcc, libvf1_Ofast_gcc
+from wave_3d_fd_perf import (libvf1_O2_gcc, libvf1_O3_gcc, libvf1_Ofast_gcc,
+                             libvf2_Ofast_gcc, libvf3_Ofast_gcc,
+                             libvf4_Ofast_gcc)
 
 
 def alloc_aligned(nz, ny, nx, k, dtype, align):
@@ -262,6 +264,48 @@ class VC2_Ofast_gcc(VC):
         super(VC2_Ofast_gcc, self).__init__('libvc2_Ofast_gcc', model, dx, dt, align)
 
 
+class VC3_Ofast_gcc(VC):
+    """VC1 with z loop moved to separate function."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC3_Ofast_gcc, self).__init__('libvc3_Ofast_gcc', model, dx, dt, align)
+
+
+class VC4_Ofast_gcc(VC):
+    """VC2 with z loop moved to separate function."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC4_Ofast_gcc, self).__init__('libvc4_Ofast_gcc', model, dx, dt, align)
+
+
+class VC5_Ofast_gcc(VC):
+    """VC3 with OpenMP."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC5_Ofast_gcc, self).__init__('libvc5_Ofast_gcc', model, dx, dt, align)
+
+
+class VC6_Ofast_gcc(VC):
+    """VC4 with OpenMP."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC6_Ofast_gcc, self).__init__('libvc6_Ofast_gcc', model, dx, dt, align)
+
+
+class VC7_Ofast_gcc(VC):
+    """VC1 with modified finite difference loop."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC7_Ofast_gcc, self).__init__('libvc7_Ofast_gcc', model, dx, dt, align)
+
+
+class VC7_O2_gcc(VC):
+    """VC7 with -O2."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC7_O2_gcc, self).__init__('libvc7_O2_gcc', model, dx, dt, align)
+
+
+class VC7_O2_unroll_gcc(VC):
+    """VC7 with -O2 and -funroll-loops."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC7_O2_unroll_gcc, self).__init__('libvc7_O2_unroll_gcc', model, dx, dt, align)
+
+
 class VF1_O2_gcc(VF):
     """A simple Fortran implementation."""
     def __init__(self, model, dx, dt=None, align=None):
@@ -288,3 +332,17 @@ class VF2_Ofast_gcc(VF):
     def __init__(self, model, dx, dt=None, align=None):
         super(VF2_Ofast_gcc, self).__init__(model, dx, dt, align)
         self.fstep = libvf2_Ofast_gcc.vf2.step
+
+
+class VF3_Ofast_gcc(VF):
+    """VF1 with OpenMP."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VF3_Ofast_gcc, self).__init__(model, dx, dt, align)
+        self.fstep = libvf3_Ofast_gcc.vf3.step
+
+
+class VF4_Ofast_gcc(VF):
+    """VF2 with OpenMP."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VF4_Ofast_gcc, self).__init__(model, dx, dt, align)
+        self.fstep = libvf4_Ofast_gcc.vf4.step

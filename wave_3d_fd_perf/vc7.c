@@ -27,7 +27,7 @@ void step(float *restrict f,
 	float f_xx;
 	float *tmp;
 	float fd_coeff[9] = {
-		-924708642.0f / 302702400 / (dx * dx),
+		-924708642.0f / 302702400 / (dx * dx) / 2,
 		538137600.0f / 302702400 / (dx * dx),
 		-94174080.0f / 302702400 / (dx * dx),
 		22830080.0f / 302702400 / (dx * dx),
@@ -42,8 +42,8 @@ void step(float *restrict f,
 		for (z = 8; z < nz - 8; z++) {
 			for (y = 8; y < ny - 8; y++) {
 				for (x = 8; x < nxi + 8; x++) {
-					f_xx = 3 * fd_coeff[0] * A(f, x, y, z);
-					for (i = 1; i < 9; i++) {
+					f_xx = 0.0f;
+					for (i = 0; i < 9; i++) {
 						f_xx += fd_coeff[i] *
 						    (A(f, x + i, y, z) +
 						     A(f, x - i, y, z) +

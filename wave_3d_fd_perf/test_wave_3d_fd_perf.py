@@ -4,8 +4,13 @@ import numpy as np
 from wave_3d_fd_perf.propagators import (VC1_O2_gcc, VC1_O3_gcc, VC1_Ofast_gcc,
                                          VC1_O2_unroll_gcc, VC1_O3_unroll_gcc,
                                          VC1_Ofast_unroll_gcc, VC2_Ofast_gcc,
+                                         VC3_Ofast_gcc, VC4_Ofast_gcc,
+                                         VC5_Ofast_gcc, VC6_Ofast_gcc,
+                                         VC7_Ofast_gcc, VC7_O2_gcc,
+                                         VC7_O2_unroll_gcc, 
                                          VF1_O2_gcc, VF1_O3_gcc, VF1_Ofast_gcc,
-                                         VF2_Ofast_gcc)
+                                         VF2_Ofast_gcc, VF3_Ofast_gcc,
+                                         VF4_Ofast_gcc)
 
 def ricker(freq, length, dt, peak_time):
     """Return a Ricker wavelet with the specified central frequency."""
@@ -87,9 +92,15 @@ def model_two(N=25, dt=0.0001):
 def versions():
     """Return a list of implementations."""
     return [VC1_O2_gcc, VC1_O3_gcc, VC1_Ofast_gcc,
-            VF1_O2_gcc,
-            VF1_O3_gcc,
-            VF1_Ofast_gcc]
+            VC1_O2_unroll_gcc, VC1_O3_unroll_gcc,
+            VC1_Ofast_unroll_gcc, VC2_Ofast_gcc,
+            VC3_Ofast_gcc, VC4_Ofast_gcc,
+            VC5_Ofast_gcc, VC6_Ofast_gcc,
+            VC7_Ofast_gcc, VC7_O2_gcc,
+            VC7_O2_unroll_gcc, 
+            VF1_O2_gcc, VF1_O3_gcc, VF1_Ofast_gcc,
+            VF2_Ofast_gcc, VF3_Ofast_gcc,
+            VF4_Ofast_gcc]
 
 
 def test_one_reflector(model_one, versions):
