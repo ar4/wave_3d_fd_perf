@@ -87,7 +87,7 @@ contains
                 nz = size(f, dim=3)
                 num_sources = size(sources, dim=2)
 
-                do z = 9, ny - 8
+                do z = 9, nz - 8
                 do y = 9, ny - 8
                 do x = 9, nxi + 8
                 f_xx = 3 * fd_coeff(1) * f(x, y, z) +                  &
