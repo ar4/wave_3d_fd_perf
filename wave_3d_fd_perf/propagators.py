@@ -6,7 +6,7 @@ import numpy as np
 import wave_3d_fd_perf
 from wave_3d_fd_perf import (libvf1_O2_gcc, libvf1_O3_gcc, libvf1_Ofast_gcc,
                              libvf2_Ofast_gcc, libvf3_Ofast_gcc,
-                             libvf4_Ofast_gcc)
+                             libvf4_O3_gcc, libvf4_Ofast_gcc)
 
 
 def alloc_aligned(nz, ny, nx, k, dtype, align):
@@ -272,8 +272,14 @@ class VC3_Ofast_gcc(VC):
         super(VC3_Ofast_gcc, self).__init__('libvc3_Ofast_gcc', model, dx, dt, align)
 
 
-class VC4_Ofast_gcc(VC):
+class VC4_O3_gcc(VC):
     """VC2 with z loop moved to separate function."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC4_O3_gcc, self).__init__('libvc4_O3_gcc', model, dx, dt, align)
+
+
+class VC4_Ofast_gcc(VC):
+    """VC4 with -Ofast."""
     def __init__(self, model, dx, dt=None, align=None):
         super(VC4_Ofast_gcc, self).__init__('libvc4_Ofast_gcc', model, dx, dt, align)
 
@@ -284,8 +290,14 @@ class VC5_Ofast_gcc(VC):
         super(VC5_Ofast_gcc, self).__init__('libvc5_Ofast_gcc', model, dx, dt, align)
 
 
-class VC6_Ofast_gcc(VC):
+class VC6_O3_gcc(VC):
     """VC4 with OpenMP."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC6_O3_gcc, self).__init__('libvc6_O3_gcc', model, dx, dt, align)
+
+
+class VC6_Ofast_gcc(VC):
+    """VC6 with -Ofast."""
     def __init__(self, model, dx, dt=None, align=None):
         super(VC6_Ofast_gcc, self).__init__('libvc6_Ofast_gcc', model, dx, dt, align)
 
@@ -323,6 +335,42 @@ class VC8a_Ofast_gcc(VC_blocksize):
                                              blocksize_z, dx, dt, align)
 
 
+class VC9_O3_gcc(VC):
+    """VC7 with AVX2 intrinsics."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC9_O3_gcc, self).__init__('libvc9_O3_gcc', model, dx, dt, align)
+
+
+class VC9_Ofast_gcc(VC):
+    """VC9 with -Ofast."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC9_Ofast_gcc, self).__init__('libvc9_Ofast_gcc', model, dx, dt, align)
+
+
+class VC10_Ofast_gcc(VC):
+    """VC9 with three separate loops for f_xx."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC10_Ofast_gcc, self).__init__('libvc10_Ofast_gcc', model, dx, dt, align)
+
+
+class VC11_Ofast_gcc(VC):
+    """VC10 with yfd_coeffs stored in an array and changes to f_xx loops."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC11_Ofast_gcc, self).__init__('libvc11_Ofast_gcc', model, dx, dt, align)
+
+
+class VC12_O3_gcc(VC):
+    """VC9 with OpenMP."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC12_O3_gcc, self).__init__('libvc12_O3_gcc', model, dx, dt, align)
+
+
+class VC12_Ofast_gcc(VC):
+    """VC12 with -Ofast."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VC12_Ofast_gcc, self).__init__('libvc12_Ofast_gcc', model, dx, dt, align)
+
+
 class VF1_O2_gcc(VF):
     """A simple Fortran implementation."""
     def __init__(self, model, dx, dt=None, align=None):
@@ -358,8 +406,15 @@ class VF3_Ofast_gcc(VF):
         self.fstep = libvf3_Ofast_gcc.vf3.step
 
 
-class VF4_Ofast_gcc(VF):
+class VF4_O3_gcc(VF):
     """VF2 with OpenMP."""
+    def __init__(self, model, dx, dt=None, align=None):
+        super(VF4_O3_gcc, self).__init__(model, dx, dt, align)
+        self.fstep = libvf4_O3_gcc.vf4.step
+
+
+class VF4_Ofast_gcc(VF):
+    """VF4 with -Ofast."""
     def __init__(self, model, dx, dt=None, align=None):
         super(VF4_Ofast_gcc, self).__init__(model, dx, dt, align)
         self.fstep = libvf4_Ofast_gcc.vf4.step
