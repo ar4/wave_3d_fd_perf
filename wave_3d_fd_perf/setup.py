@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 def configuration(parent_package='', top_path=None):
     from numpy.distutils.misc_util import Configuration
-    config = Configuration('wave_2d_fd_perf', parent_package, top_path)
+    config = Configuration('wave_3d_fd_perf', parent_package, top_path)
     config.add_extension(name='libvc1_O2_gcc', sources=['vc1.c'], extra_compile_args=['-Wall', '-Wextra', '-pedantic', '-Werror', '-march=native', '-O2', '-std=c11'])
     config.add_extension(name='libvc1_O3_gcc', sources=['vc1.c'], extra_compile_args=['-Wall', '-Wextra', '-pedantic', '-Werror', '-march=native', '-O3', '-std=c11'])
     config.add_extension(name='libvc1_Ofast_gcc', sources=['vc1.c'], extra_compile_args=['-Wall', '-Wextra', '-pedantic', '-Werror', '-march=native', '-Ofast', '-std=c11'])
