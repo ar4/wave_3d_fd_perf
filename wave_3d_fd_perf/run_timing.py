@@ -17,7 +17,8 @@ from wave_3d_fd_perf.propagators import (VC1_O2_gcc, VC1_O3_gcc, VC1_Ofast_gcc,
                                          VC12_O3_gcc, VC12_Ofast_gcc,
                                          VF1_O2_gcc, VF1_O3_gcc, VF1_Ofast_gcc,
                                          VF2_Ofast_gcc, VF3_Ofast_gcc,
-                                         VF4_O3_gcc, VF4_Ofast_gcc)
+                                         VF4_O3_gcc, VF4_Ofast_gcc,
+                                         VNumba)
 from wave_3d_fd_perf.test_wave_3d_fd_perf import ricker
 
 def run_timing_num_steps(num_repeat=10, num_steps=range(0, 110, 10),
@@ -84,7 +85,8 @@ def _versions():
             {'class': VF2_Ofast_gcc, 'name': 'F v2 (gcc, -Ofast)'},
             {'class': VF3_Ofast_gcc, 'name': 'F v3 (gcc, -Ofast)'},
             {'class': VF4_O3_gcc, 'name': 'F v4 (gcc, -O3)'},
-            {'class': VF4_Ofast_gcc, 'name': 'F v4 (gcc, -Ofast)'}]
+            {'class': VF4_Ofast_gcc, 'name': 'F v4 (gcc, -Ofast)'},
+            {'class': VNumba, 'name': 'Numba'}]
 
 
 def _make_model(N, nsteps):

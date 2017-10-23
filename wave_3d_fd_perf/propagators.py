@@ -7,6 +7,7 @@ import wave_3d_fd_perf
 from wave_3d_fd_perf import (libvf1_O2_gcc, libvf1_O3_gcc, libvf1_Ofast_gcc,
                              libvf2_Ofast_gcc, libvf3_Ofast_gcc,
                              libvf4_O3_gcc, libvf4_Ofast_gcc)
+from wave_3d_fd_perf import vnumba
 
 
 def alloc_aligned(nz, ny, nx, k, dtype, align):
@@ -213,6 +214,35 @@ class VF(Propagator):
                    self.model_padded2_dt2.T, self.nx,
                    self.dx, self.dt,
                    sources.T, sources_x, sources_y, sources_z, num_steps)
+
+        if num_steps%2 != 0:
+            tmp = self.current_wavefield
+            self.current_wavefield = self.previous_wavefield
+            self.previous_wavefield = tmp
+
+        return self.current_wavefield[8 : 8 + self.nz,
+                                      8 : 8 + self.ny,
+                                      8 : 8 + self.nx]
+
+
+class VNumba(Propagator):
+    """Numba implementations."""
+
+    def step(self, num_steps, sources=None, sources_x=None, sources_y=None,
+             sources_z=None):
+        """Propagate wavefield."""
+
+        num_sources = sources.shape[0]
+        source_len = sources.shape[1]
+        vnumba.step(self.current_wavefield, self.previous_wavefield,
+                    self.nx_padded, self.ny_padded, self.nz_padded,
+                    self.nx,
+                    self.model_padded2_dt2, self.dx, self.dt,
+                    sources,
+                    sources_x.astype(np.int),
+                    sources_y.astype(np.int),
+                    sources_z.astype(np.int),
+                    num_sources, source_len, num_steps)
 
         if num_steps%2 != 0:
             tmp = self.current_wavefield

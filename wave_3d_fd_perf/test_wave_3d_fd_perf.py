@@ -16,7 +16,8 @@ from wave_3d_fd_perf.propagators import (VC1_O2_gcc, VC1_O3_gcc, VC1_Ofast_gcc,
                                          VC12_O3_gcc, VC12_Ofast_gcc,
                                          VF1_O2_gcc, VF1_O3_gcc, VF1_Ofast_gcc,
                                          VF2_Ofast_gcc, VF3_Ofast_gcc,
-                                         VF4_O3_gcc, VF4_Ofast_gcc)
+                                         VF4_O3_gcc, VF4_Ofast_gcc,
+                                         VNumba)
 
 def ricker(freq, length, dt, peak_time):
     """Return a Ricker wavelet with the specified central frequency."""
@@ -112,7 +113,8 @@ def versions():
             VC12_O3_gcc, VC12_Ofast_gcc,
             VF1_O2_gcc, VF1_O3_gcc, VF1_Ofast_gcc,
             VF2_Ofast_gcc, VF3_Ofast_gcc,
-            VF4_O3_gcc, VF4_Ofast_gcc]
+            VF4_O3_gcc, VF4_Ofast_gcc,
+            VNumba]
 
 
 def test_one_reflector(model_one, versions):
